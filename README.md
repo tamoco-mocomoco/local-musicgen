@@ -11,7 +11,17 @@ server/engine.py    ACE-Step の読み込み・生成・自動解放 (省メモ�
 server/loop.py      ループ用の後処理と末尾の無音カット
 gen_music.py        CLI (標準ライブラリのみ)
 mcp_server.py       Claude Code / Claude Desktop 用 MCP サーバー
+samples/            生成したサンプル音源 (MP3、CC0)
 ```
+
+## サンプル
+
+[samples/](samples/) に、このサービスで生成した曲を置いている (すべて AI 生成、CC0)。
+
+- [タイトル画面風チップチューン](samples/title-chiptune.mp3) / [昼寝シーンのループ曲](samples/nap-lullaby-loop.mp3) / [短いジングル](samples/happy-jingle.mp3)
+- [省メモリ設定の聴き比べ](samples/comparison/) (元の精度・省メモリ設定・言語モデル 0.6B / 1.7B)
+
+曲ごとの caption・seed・設定は [samples/README.md](samples/README.md) にある。
 
 ## サービス共通の約束事
 
@@ -109,6 +119,6 @@ claude mcp add music -- uv run --no-project --with "mcp>=1.2" python "$PWD/mcp_s
 
 ## ライセンス
 
-このリポジトリのコードは [MIT License](LICENSE)。ACE-Step 1.5 本体とモデルの重みは同梱しておらず、各自が取得する。
+このリポジトリのコードは [MIT License](LICENSE)、[samples/](samples/) の音源は CC0 1.0。ACE-Step 1.5 本体とモデルの重みは同梱しておらず、各自が取得する。
 ACE-Step 1.5 のライセンスと、生成した曲の利用条件は利用者が公式リポジトリで確認すること。
 生成した曲の利用に関する責任は利用者にある。
