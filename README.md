@@ -118,6 +118,15 @@ claude mcp add music -- uv run --no-project --with "mcp>=1.2" python "$PWD/mcp_s
 | `OUTPUT_DIR` | `./outputs` | 保存先 |
 | `MUSIC_URL` | `http://localhost:8100` | CLI と MCP サーバーの接続先 |
 
+## 関連リポジトリ
+
+同じ作りのローカル生成サービスと、それらをつないで動画を作るツール。
+
+| リポジトリ | 内容 |
+|---|---|
+| [local-imagegen](https://github.com/tamoco-mocomoco/local-imagegen) | 画像生成 (diffusers)。HTTP API・Web UI・CLI・MCP サーバー |
+| [local-vidstudio](https://github.com/tamoco-mocomoco/local-vidstudio) | 画像・音楽・音声 (VOICEVOX) の生成サービスをつなぎ、作品 JSON から短い動画 (MP4) を作るオーサリングツール。サービスの起動・停止も受け持つ |
+
 ## ライセンス
 
 このリポジトリのコードは [MIT License](LICENSE)、[samples/](samples/) の音源は CC0 1.0。ACE-Step 1.5 本体とモデルの重みは同梱しておらず、各自が取得する。
