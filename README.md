@@ -18,7 +18,7 @@ samples/            生成したサンプル音源 (MP3、CC0)
 
 [samples/](samples/) に、このサービスで生成した曲を置いている (すべて AI 生成、CC0)。
 
-- [タイトル画面風チップチューン](samples/title-chiptune.mp3) / [昼寝シーンのループ曲](samples/nap-lullaby-loop.mp3) / [短いジングル](samples/happy-jingle.mp3)
+- [カフェ風のジャズピアノトリオ](samples/cafe-jazz-trio.mp3) / [昼寝シーンのループ曲](samples/nap-lullaby-loop.mp3) / [短いジングル](samples/happy-jingle.mp3)
 - [省メモリ設定の聴き比べ](samples/comparison/) (元の精度・省メモリ設定・言語モデル 0.6B / 1.7B)
 
 曲ごとの caption・seed・設定は [samples/README.md](samples/README.md) にある。
@@ -85,7 +85,7 @@ python3 run.py                     # http://127.0.0.1:8100
 別ターミナルで:
 
 ```bash
-python3 gen_music.py "cute cheerful chiptune for a kids game title screen, instrumental" --bpm 140 -o title.wav
+python3 gen_music.py "cozy jazz piano trio for a cafe scene, instrumental" --bpm 120 -o cafe.wav
 python3 gen_music.py "gentle felt piano and music box lullaby, instrumental, no drums" --loop -o nap.wav
 python3 gen_music.py "upbeat kids pop song, ukulele, handclaps" --vocal en --lyrics lyrics.txt -o song.wav
 python3 gen_music.py --status      # 状態とメモリ
@@ -95,6 +95,7 @@ python3 gen_music.py --unload      # すぐにメモリを空ける
 - `--loop`: 末尾のフェードと無音を切り、冒頭と同じくらいの音量の位置で終わらせ、終端を始端にクロスフェードする。ゲームの BGM 向け
 - 言語モデルを使うと曲が指定より短めに終わることがある。末尾の無音は自動で切り、実際の長さを返す。指定の長さを最後まで使い切りたいときは `--no-lm`
 - caption は英語で、曲調・楽器・テンポ感・用途を書くと効く
+- 言語モデルは生成の前に caption を書き換える。指定したジャンルや楽器から離れるときは `--no-rewrite` (HTTP / MCP では `rewrite_caption: false`) で書き換えを止める
 
 ## Claude から使う (MCP)
 

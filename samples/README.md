@@ -9,13 +9,13 @@ local-music (ACE-Step 1.5) で生成した曲のサンプル。**すべて AI (A
 
 | ファイル | 長さ | 内容 | 設定 |
 |---|---|---|---|
-| [title-chiptune.mp3](title-chiptune.mp3) | 28.9 秒 | 子ども向けゲームのタイトル画面風チップチューン | 言語モデル 0.6B、bpm 140、C Major、seed 7。末尾の無音をカット |
+| [cafe-jazz-trio.mp3](cafe-jazz-trio.mp3) | 26.8 秒 | カフェ風のジャズピアノトリオ | 言語モデル 0.6B (caption の書き換えなし)、bpm 120、F Major、seed 21。末尾の無音をカット |
 | [nap-lullaby-loop.mp3](nap-lullaby-loop.mp3) | 22.0 秒 | 昼寝シーンのピアノとオルゴール (ループ加工版) | 言語モデル 0.6B、bpm 70、F Major、seed 42、`loop=true` |
 | [happy-jingle.mp3](happy-jingle.mp3) | 8.9 秒 | 短いジングル | 言語モデル 0.6B、seed 3、長さ指定 10 秒 |
 
 caption (曲の説明) はそれぞれ次のとおり。
 
-- title-chiptune: `cute cheerful chiptune, 8-bit video game title screen music for a kids game, bright square wave lead melody, bouncy bass, playful, happy, catchy loop, instrumental`
+- cafe-jazz-trio: `cozy jazz piano trio, warm acoustic piano melody, walking upright bass, soft brushed drums, relaxed medium swing, cafe afternoon, gentle, playful, instrumental`
 - nap-lullaby-loop: `gentle lullaby, soft felt piano and music box, slow, calm, sleepy afternoon nap, warm, peaceful, minimal, instrumental, no drums`
 - happy-jingle: `short happy jingle, glockenspiel and ukulele, instrumental`
 

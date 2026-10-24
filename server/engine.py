@@ -222,9 +222,12 @@ class MusicEngine:
     def generate(self, *, caption: str, lyrics: Optional[str] = None, instrumental: bool = True,
                  duration: float = 30.0, bpm: Optional[int] = None, keyscale: Optional[str] = None,
                  vocal_language: Optional[str] = None, seed: Optional[int] = None, loop: bool = False,
-                 loop_crossfade: float = 1.5, use_lm: Optional[bool] = None, trim: bool = True) -> dict:
+                 loop_crossfade: float = 1.5, use_lm: Optional[bool] = None, trim: bool = True,
+                 rewrite_caption: bool = True) -> dict:
         """use_lm: None なら読み込んだ言語モデルを使う。False で言語モデルなし (指定の長さを最後まで使い切りやすい)。
-        trim: 末尾の無音を切る (言語モデルが短い曲を作ると残りが無音で埋まるため)。"""
+        trim: 末尾の無音を切る (言語モデルが短い曲を作ると残りが無音で埋まるため)。
+        rewrite_caption: False にすると、言語モデルに曲の構成は考えさせつつ、caption は書き換えさせない
+        (言語モデルは caption を自分の言葉で言い換えるため、細かいジャンル指定が薄まることがある)。"""
         from server.loop import make_loop, trim_silence
 
         if seed is None:
@@ -239,6 +242,8 @@ class MusicEngine:
                             lyrics=lyrics if (lyrics and not instrumental) else "[Instrumental]")
             if not lm_on:  # 言語モデルを完全に使わない (キャプション書き換えやメタ情報の推定もしない)
                 kw.update(use_cot_metas=False, use_cot_caption=False, use_cot_language=False)
+            elif not rewrite_caption:
+                kw["use_cot_caption"] = False
             if bpm:
                 kw["bpm"] = int(bpm)
             if keyscale:
@@ -268,7 +273,7 @@ class MusicEngine:
         trim_info = trim_silence(raw) if (trim and not loop) else None
         item = dict(file=raw.name, path=str(raw), url=f"/outputs/{raw.name}", seed=seed, seconds=elapsed,
                     caption=caption, instrumental=instrumental, requested_duration=float(duration),
-                    lm=LM_MODEL if lm_on else None, trim=trim_info,
+                    lm=LM_MODEL if lm_on else None, rewrite_caption=bool(lm_on and rewrite_caption), trim=trim_info,
                     time_costs=(res.extra_outputs or {}).get("time_costs"), footprint_gb=footprint_gb())
         if loop:
             looped = OUTPUT_DIR / f"{stem}-loop.wav"

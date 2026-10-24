@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """依存ゼロの CLI。音楽生成サーバーに投げて WAV を保存する。
 
-  python3 gen_music.py "cute cheerful chiptune for a kids game title screen, instrumental" -o title.wav
+  python3 gen_music.py "cozy jazz piano trio for a cafe scene, instrumental" -o cafe.wav
   python3 gen_music.py "calm piano lullaby, instrumental" --duration 45 --loop -o nap.wav
   python3 gen_music.py "upbeat kids pop song" --vocal en --lyrics lyrics.txt -o song.wav
   python3 gen_music.py --status | --load | --unload
@@ -40,6 +40,7 @@ def main() -> int:
     p.add_argument("--crossfade", type=float, default=1.5, help="ループのつなぎ目のクロスフェード秒数")
     p.add_argument("--no-lm", action="store_true", help="言語モデルを使わない (指定の長さを最後まで使い切りやすい)")
     p.add_argument("--no-trim", action="store_true", help="末尾の無音を切らない")
+    p.add_argument("--no-rewrite", action="store_true", help="言語モデルに caption を書き換えさせない (ジャンル指定を守らせる)")
     p.add_argument("--vocal", metavar="LANG", help="歌入りにする (en, ja など)。--lyrics と併用")
     p.add_argument("--lyrics", help="歌詞ファイルのパス、または歌詞の文字列")
     p.add_argument("--status", action="store_true")
@@ -61,6 +62,8 @@ def main() -> int:
                     trim=not a.no_trim, return_base64=True, instrumental=not a.vocal)
         if a.no_lm:
             body["use_lm"] = False
+        if a.no_rewrite:
+            body["rewrite_caption"] = False
         if a.bpm:
             body["bpm"] = a.bpm
         if a.key:

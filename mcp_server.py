@@ -27,7 +27,7 @@ OUTPUT_DIR = Path(os.environ.get("MUSIC_OUTPUT_DIR", Path(__file__).resolve().pa
 
 STATIC_INSTRUCTIONS = (
     "ローカルの音楽生成サーバー (ACE-Step 1.5)。generate_music で BGM や歌入りの曲を作って WAV で保存する。"
-    "caption は英語で曲調・楽器・テンポ感・用途を書く (例: 'cute cheerful chiptune for a kids game title screen, instrumental')。"
+    "caption は英語で曲調・楽器・テンポ感・用途を書く (例: 'cozy jazz piano trio for a cafe scene, instrumental')。"
     "ゲームの BGM には loop=True が便利。初回はモデルの読み込みに 30〜60 秒かかり、使わなければ数分で自動解放される。"
     "メモリが 24GB 程度のマシンでは、画像生成サーバーのモデルを解放してから使うこと。"
 )
@@ -98,6 +98,7 @@ def generate_music(
     seed: Optional[int] = None,
     loop: bool = False,
     use_lm: Optional[bool] = None,
+    rewrite_caption: bool = True,
     out_path: Optional[str] = None,
 ) -> str:
     """曲を生成して WAV を保存し、保存先とメタ情報を返す。
@@ -107,9 +108,11 @@ def generate_music(
     - instrumental=False で歌入り。lyrics に [Verse] [Chorus] などのタグ付き歌詞、vocal_language に en / ja など
     - loop=True: 末尾のフェードと無音を切り、終端を始端にクロスフェードしてゲームでループ再生しやすくする
     - use_lm=False: 言語モデルを使わない (指定の長さを最後まで使い切りやすい)
+    - rewrite_caption=False: 言語モデルに caption を書き換えさせない。チップチューンなど細かいジャンル指定を守らせたいときに使う
     - out_path: 保存先。省略時は outputs/ にサーバー命名で保存
     """
-    body: dict = dict(caption=caption, duration=duration, instrumental=instrumental, loop=loop, return_base64=True)
+    body: dict = dict(caption=caption, duration=duration, instrumental=instrumental, loop=loop,
+                      rewrite_caption=rewrite_caption, return_base64=True)
     for k, v in (("lyrics", lyrics), ("vocal_language", vocal_language), ("bpm", bpm), ("keyscale", keyscale),
                  ("seed", seed), ("use_lm", use_lm)):
         if v is not None:

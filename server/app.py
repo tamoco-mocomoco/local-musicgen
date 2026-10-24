@@ -25,7 +25,7 @@ from server.engine import OUTPUT_DIR, engine  # noqa: E402
 
 
 class GenerateRequest(BaseModel):
-    caption: str = Field(..., min_length=1, description="曲の説明 (英語推奨)。例: cute cheerful chiptune for a kids game title screen, instrumental")
+    caption: str = Field(..., min_length=1, description="曲の説明 (英語推奨)。例: cozy jazz piano trio for a cafe scene, instrumental")
     lyrics: Optional[str] = Field(None, description="歌詞 ([Verse] [Chorus] などのタグ付き)。instrumental=false のときだけ使う")
     instrumental: bool = True
     duration: float = Field(30.0, ge=5, le=240, description="秒")
@@ -37,6 +37,7 @@ class GenerateRequest(BaseModel):
     loop_crossfade: float = Field(1.5, ge=0.1, le=8)
     use_lm: Optional[bool] = Field(None, description="false で言語モデルを使わない (指定の長さを最後まで使い切りやすい)")
     trim: bool = Field(True, description="末尾の無音を切る (loop=false のとき)")
+    rewrite_caption: bool = Field(True, description="false で言語モデルに caption を書き換えさせない (細かいジャンル指定を守らせたいとき)")
     return_base64: bool = False
 
 
@@ -60,7 +61,8 @@ def generate(req: GenerateRequest) -> JSONResponse:
         item = engine.generate(
             caption=req.caption, lyrics=req.lyrics, instrumental=req.instrumental, duration=req.duration,
             bpm=req.bpm, keyscale=req.keyscale, vocal_language=req.vocal_language, seed=req.seed,
-            loop=req.loop, loop_crossfade=req.loop_crossfade, use_lm=req.use_lm, trim=req.trim)
+            loop=req.loop, loop_crossfade=req.loop_crossfade, use_lm=req.use_lm, trim=req.trim,
+            rewrite_caption=req.rewrite_caption)
     except RuntimeError as e:
         raise HTTPException(500, str(e))
     if req.return_base64:
