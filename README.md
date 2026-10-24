@@ -1,4 +1,4 @@
-# local-music
+# local-musicgen
 
 ローカルで BGM や歌入りの曲を作る音楽生成サービス。[ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5) を省メモリ設定で動かし、
 HTTP API・CLI・MCP サーバーで呼べるようにしたもの。画像生成の [local-imagegen](https://github.com/tamoco-mocomoco/local-imagegen) と同じ作りで、

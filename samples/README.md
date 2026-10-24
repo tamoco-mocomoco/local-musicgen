@@ -1,6 +1,6 @@
 # サンプル音源
 
-local-music (ACE-Step 1.5) で生成した曲のサンプル。**すべて AI (ACE-Step 1.5) で生成したもの**で、人の手による作曲・演奏・編集はしていない
+local-musicgen (ACE-Step 1.5) で生成した曲のサンプル。**すべて AI (ACE-Step 1.5) で生成したもの**で、人の手による作曲・演奏・編集はしていない
 (ループ版のみ、サービスのループ加工を適用)。
 
 生成環境: MacBook Pro (M2 Max / 64GB)、ACE-Step 1.5 (turbo、inference_steps 8)、MLX。MP3 (192kbps) に変換して置いている。

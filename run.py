@@ -37,7 +37,7 @@ def main() -> int:
     host = os.environ.get("HOST", "127.0.0.1")
     port = os.environ.get("PORT", "8100")
     env = dict(os.environ, PYTHONPATH=str(ROOT) + os.pathsep + os.environ.get("PYTHONPATH", ""))
-    print(f"local-music: http://{host}:{port}  (ACE-Step: {home})")
+    print(f"local-musicgen: http://{host}:{port}  (ACE-Step: {home})")
     cmd = [str(py), "-m", "uvicorn", "server.app:app", "--host", host, "--port", port, *sys.argv[1:]]
     try:
         return subprocess.call(cmd, cwd=str(ROOT), env=env)

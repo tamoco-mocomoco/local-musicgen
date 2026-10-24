@@ -2,7 +2,7 @@
 """Claude Code / Claude Desktop から呼べる MCP サーバー (stdio)。音楽生成サーバーの HTTP API を薄く包む。
 
 先に python3 run.py でサーバーを起動しておく。mcp パッケージが必要 (uv run --with mcp で動かすのが手軽):
-  claude mcp add music -- uv run --no-project --with "mcp>=1.2" python /ABS/PATH/local-music/mcp_server.py
+  claude mcp add music -- uv run --no-project --with "mcp>=1.2" python /ABS/PATH/local-musicgen/mcp_server.py
 環境変数: MUSIC_URL (既定 http://localhost:8100)、MUSIC_OUTPUT_DIR (既定 このフォルダの outputs/)
 """
 from __future__ import annotations
@@ -48,7 +48,7 @@ def _call(path: str, body: Optional[dict] = None, timeout: float = 1800) -> dict
             pass
         raise ToolError(f"音楽生成サーバーのエラー (HTTP {e.code}): {detail}")
     except (urllib.error.URLError, ConnectionError) as e:
-        raise ToolError(f"音楽生成サーバー {MUSIC_URL} に接続できません ({e})。local-music で python3 run.py を実行してください")
+        raise ToolError(f"音楽生成サーバー {MUSIC_URL} に接続できません ({e})。local-musicgen で python3 run.py を実行してください")
 
 
 def _instructions() -> str:
